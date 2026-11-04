@@ -23,3 +23,20 @@ jobs:
         run: |
           sleep 5
           curl --fail http://localhost:5000/api/health
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt pytest requests
+
+      - name: Run tests
+        env:
+          BASE_URL: http://localhost:5000
+        run: pytest -v
+
+      - name: Stop and remove container
+        if: always()
+        run: docker rm -f events-api-container
