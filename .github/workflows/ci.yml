@@ -12,3 +12,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t events-api:latest .
+
+      - name: Start container
+        run: docker run -d --name events-api-container -p 5000:5000 events-api:latest
+
+      - name: Wait for API and check health
+        run: |
+          sleep 5
+          curl --fail http://localhost:5000/api/health
