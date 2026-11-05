@@ -36,7 +36,7 @@ def test_login_returns_access_token():
         json={"username": username, "password": password},
     )
 
-    assert response.status_code == 200
+    assert response.status_code == 201
     assert "access_token" in response.json()
 
 def test_create_event_with_token_returns_event(auth_token):
